@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="28dp"
+    android:gravity="center">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="JARVIS 0.1"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="12dp" />
+
+    <TextView
+        android:id="@+id/status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pronto."
+        android:textSize="18sp"
+        android:gravity="center"
+        android:layout_marginBottom="28dp" />
+
+    <Button
+        android:id="@+id/listenButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="🎙️ Falar com JARVIS"
+        android:minHeight="56dp" />
+
+    <Button
+        android:id="@+id/timeButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="🕐 Que horas são?"
+        android:layout_marginTop="12dp"
+        android:minHeight="56dp" />
+
+    <Button
+        android:id="@+id/calculatorButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="🧮 Abrir calculadora"
+        android:layout_marginTop="12dp"
+        android:minHeight="56dp" />
+
+    <Button
+        android:id="@+id/youtubeButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="▶️ Abrir YouTube"
+        android:layout_marginTop="12dp"
+        android:minHeight="56dp" />
+
+</LinearLayout>
