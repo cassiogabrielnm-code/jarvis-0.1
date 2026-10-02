@@ -74,6 +74,13 @@
             android:layout_marginTop="10dp"
             android:minHeight="52dp" />
         <Button
+            android:id="@+id/appsButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="📱 Gerenciar aplicativos"
+            android:layout_marginTop="10dp"
+            android:minHeight="52dp" />
+        <Button
             android:id="@+id/settingsButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
