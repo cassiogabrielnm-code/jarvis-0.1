@@ -17,6 +17,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import java.text.Normalizer
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -47,6 +48,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         findViewById<Button>(R.id.browserButton).setOnClickListener { openBrowser() }
         findViewById<Button>(R.id.galleryButton).setOnClickListener { openGallery() }
         findViewById<Button>(R.id.settingsButton).setOnClickListener { openSettings() }
+        findViewById<Button>(R.id.appsButton).setOnClickListener { openAppManager() }
     }
 
     override fun onInit(statusCode: Int) {
@@ -100,8 +102,56 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             command.contains("aumentar") && command.contains("volume") -> changeVolume(true)
             command.contains("diminui") && command.contains("volume") -> changeVolume(false)
             command.contains("diminuir") && command.contains("volume") -> changeVolume(false)
+            command.startsWith("abrir ") -> openSelectedApp(command.removePrefix("abrir ").trim())
+            command.startsWith("abre ") -> openSelectedApp(command.removePrefix("abre ").trim())
             else -> respond("Ainda não conheço esse comando. Tente outro comando local.")
         }
+    }
+
+    private fun openAppManager() {
+        startActivity(Intent(this, AppSelectionActivity::class.java))
+    }
+
+    private fun openSelectedApp(requestedName: String) {
+        val selected = getSharedPreferences("jarvis_preferences", MODE_PRIVATE)
+            .getStringSet("selected_apps", emptySet()) ?: emptySet()
+
+        if (selected.isEmpty()) {
+            respond("Nenhum aplicativo foi autorizado ainda. Abra Gerenciar aplicativos e escolha os apps.")
+            return
+        }
+
+        val apps = packageManager.queryIntentActivities(
+            Intent(Intent.ACTION_MAIN).apply { addCategory(Intent.CATEGORY_LAUNCHER) }, 0
+        ).filter { it.activityInfo.packageName in selected }
+
+        val normalizedRequest = normalizeText(requestedName)
+            .removePrefix("o ").removePrefix("a ")
+            .removePrefix("app ").removePrefix("aplicativo ").trim()
+
+        val matches = apps.filter {
+            normalizeText(it.loadLabel(packageManager).toString()) == normalizedRequest ||
+            normalizeText(it.loadLabel(packageManager).toString()).contains(normalizedRequest)
+        }.distinctBy { it.activityInfo.packageName }
+
+        when {
+            matches.size == 1 -> {
+                val app = matches.first()
+                val launchIntent = packageManager.getLaunchIntentForPackage(app.activityInfo.packageName)
+                if (launchIntent != null) {
+                    respond("Abrindo " + app.loadLabel(packageManager).toString() + ".")
+                    startActivity(launchIntent)
+                } else respond("Não consegui abrir esse aplicativo.")
+            }
+            matches.size > 1 -> respond("Encontrei mais de um aplicativo com esse nome. Seja mais específico.")
+            else -> respond("Esse aplicativo não está na sua lista de aplicativos autorizados.")
+        }
+    }
+
+    private fun normalizeText(value: String): String {
+        return Normalizer.normalize(value.lowercase(Locale("pt", "BR")), Normalizer.Form.NFD)
+            .replace(Regex("\\p{InCombiningDiacriticalMarks}+"), "")
+            .trim()
     }
 
     private fun tellTime() {
