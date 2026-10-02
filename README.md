@@ -1,45 +1,62 @@
 # JARVIS 0.1 🤖
 
-Primeira versão do assistente pessoal Android, focada em comandos locais.
+Assistente Android pessoal em Kotlin, focado em comandos locais e preparado para evoluir.
 
-## Comandos por voz
+## Recursos atuais
 
-- "Que horas são?"
-- "Abrir calculadora"
-- "Abrir YouTube"
-- "Quanto está a bateria?"
-- "Abrir configurações"
-- "Abrir câmera"
-- "Abrir navegador"
-- "Abrir galeria"
-- "Abrir telefone"
-- "Abrir mensagens"
-- "Abrir Wi-Fi"
-- "Aumentar volume"
-- "Diminuir volume"
+- Reconhecimento de voz em português
+- Respostas por voz em português
+- Hora e data
+- Bateria
+- Calculadora
+- YouTube
+- Câmera
+- Galeria
+- Navegador
+- Telefone
+- Mensagens
+- Wi-Fi
+- Controle de volume
+- Configurações
+- Gerenciador de aplicativos
+- Seleção de aplicativos autorizados
+- Busca de aplicativos
+- Comandos "abrir [app]" e "abre [app]"
+- Nomes com ou sem acentos
+- Comando de ajuda
+- Comando para parar a fala
+- Execução local dos comandos básicos, sem API de IA
 
-O JARVIS usa o reconhecimento de voz e a síntese de voz do Android. Os comandos básicos são executados localmente, sem precisar de uma API de IA.
+## APK automático
 
-## Como executar
+Cada push na branch `main` dispara o GitHub Actions e gera um APK de debug como artefato.
+
+No GitHub:
+**Actions → Build JARVIS APK → jarvis-debug-apk**
+
+Também dá para iniciar manualmente em **Actions → Build JARVIS APK → Run workflow**.
+
+## Como executar localmente
 
 1. Abra o projeto no Android Studio.
 2. Aguarde o Gradle sincronizar.
-3. Use um emulador Android ou conecte um celular Android por USB ou depuração sem fio.
+3. Use um emulador ou um celular Android por USB/depuração sem fio.
 4. Execute o app.
 5. Conceda a permissão de microfone.
-6. Toque em "Falar com JARVIS" e diga um dos comandos.
+6. Toque em "Falar com JARVIS" e diga um comando.
 
-## Arquitetura atual
+## Arquitetura
 
 - Kotlin: lógica do aplicativo.
 - XML: interface.
 - Android SDK: voz, texto para fala e integração com aplicativos/configurações.
-- Sem chave de API e sem dependência de IA externa nesta versão.
+- Sem chave de API para os comandos básicos.
 
-## Próximas etapas
+## Próximas evoluções
 
-- Ativação por voz "Ei, JARVIS".
-- Serviço de escuta em segundo plano com consumo controlado.
-- Mais comandos do sistema.
-- Integração opcional com IA para perguntas complexas.
-- Suporte e testes com fones Bluetooth.
+- Wake word "Ei, JARVIS"
+- Serviço de escuta em segundo plano
+- Comandos mais naturais
+- Integração opcional com IA online
+- Mais automações do Android
+- Suporte e testes com fones Bluetooth
